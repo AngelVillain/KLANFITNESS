@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Carrito | KLAN FITNESS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tienda-body" id="pagina-carrito">
+
+    <header class="main-header">
+        <div class="logo">KLAN FITNESS</div>
+        <nav class="main-nav">
+            <a href="index.html">INICIO</a>
+            <a href="productos.html">PRODUCTOS</a>
+            <a href="promociones.html">PROMOCIONES</a>
+            <a href="nosotros.html">NOSOTROS</a>
+        </nav>
+        <div class="header-icons">
+          <div class="header-icons" style="display: flex; align-items: center;">
+    <div class="search-box">
+        <input type="text" id="input-buscador" placeholder="Buscar suplemento...">
+        <span class="icon-search" id="btn-buscador" title="Buscar">🔍</span>
+    </div>
+
+    <a href="carrito.html" class="icon-cart" style="text-decoration: none; color: white;">🛒 <span id="cart-count">0</span></a>
+    <a href="admin.html" style="text-decoration: none; color: white; font-size: 20px; margin-left: 15px;" title="Acceso Administrador">👤</a>
+</div>
+    </header>
+
+    <main class="carrito-container">
+        <h1 class="titulo-carrito">Tu Carrito</h1>
+
+        <div class="carrito-layout">
+            <div class="carrito-lista" id="contenedor-items-carrito">
+                </div>
+
+            <div class="carrito-resumen">
+                <h2>Resumen de Orden</h2>
+                <div class="resumen-detalle">
+                    <p>Subtotal (<span id="resumen-cantidad">0</span> items):</p>
+                    <p id="resumen-subtotal">$ 0</p>
+                </div>
+                <div class="resumen-detalle">
+                    <p>Envío:</p>
+                    <p>Por calcular</p>
+                </div>
+                <div class="resumen-total">
+                    <p>TOTAL A PAGAR:</p>
+                    <p id="resumen-total-final">$ 0</p>
+                </div>
+
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <h3 style="color: var(--watermelon-green); font-size: 1rem; margin-bottom: 5px;">Datos de Envío</h3>
+                    <input type="text" id="cliente-nombre" class="input-form" placeholder="Nombre completo" required>
+                    <input type="tel" id="cliente-telefono" class="input-form" placeholder="Número de teléfono" required>
+                    <input type="text" id="cliente-ciudad" class="input-form" placeholder="Ciudad" required>
+                    <input type="text" id="cliente-direccion" class="input-form" placeholder="Dirección exacta" required>
+                </div>
+
+                <button id="btn-enviar-pedido" class="btn-watermelon btn-elegante" style="margin-top: 20px; background-color: #25D366; color: white; font-size: 1.1rem;">
+                    <span style="margin-right: 10px;"></span> HACER PEDIDO (WHATSAPP)
+                </button>
+            </div>
+        </div>
+    </main>
+<footer class="main-footer">
+        <div class="footer-content">
+            <h2>KLAN FITNESS</h2>
+            <p>Potencia tu disciplina. Supera tus límites.</p>
+            <div class="footer-linea"></div>
+            <p class="copyright">© 2026 KLAN FITNESS. Todos los derechos reservados</p>
+        </div>
+    </footer>
+    <script type="module" src="carrito.js"></script>
+</body>
+</html>

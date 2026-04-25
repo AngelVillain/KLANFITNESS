@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | KLAN FITNESS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+    <div id="login-section" class="login-pantalla">
+        <div class="login-caja">
+            <h2 style="color: var(--watermelon-red); margin-bottom: 10px; font-size: 2rem; text-transform: uppercase;">Acceso Administrativo</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Solo para creadores de KLAN FITNESS</p>
+            <form id="form-login">
+                <input type="text" id="login-user" class="input-form" placeholder="Usuario" required>
+                <input type="password" id="login-pass" class="input-form" placeholder="Contraseña" required>
+                <button type="submit" class="btn-watermelon btn-elegante">INGRESAR</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" style="display: none;">
+        <header class="admin-header">
+            <h1>KLAN FITNESS <span>| Panel de Control</span></h1>
+            <button id="btn-cerrar-sesion" style="position: absolute; right: 20px; top: 25px; background: transparent; border: 1px solid var(--watermelon-red); color: var(--watermelon-red); padding: 5px 15px; border-radius: 5px; cursor: pointer;">Cerrar Sesión</button>
+        </header>
+
+        <main class="admin-container">
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; width: 100%;">
+                <section class="admin-card" style="flex: 1;">
+                    <h2>Crear Categoría</h2>
+                    <form id="form-categoria">
+                        <input type="text" id="categoria-nombre" class="input-form" placeholder="Ej. Proteínas" required>
+                        <button type="submit" class="btn-watermelon">Añadir Categoría</button>
+                    </form>
+                    <div class="lista-categorias-box">
+                        <h3>Categorías Existentes:</h3>
+                        <div id="lista-categorias"></div>
+                    </div>
+                </section>
+
+                <section class="admin-card" style="flex: 1;">
+                    <h2>Crear Marca</h2>
+                    <form id="form-marca">
+                        <input type="text" id="marca-nombre" class="input-form" placeholder="Ej. Optimum Nutrition" required>
+                        <button type="submit" class="btn-watermelon">Añadir Marca</button>
+                    </form>
+                    <div class="lista-categorias-box">
+                        <h3>Marcas Existentes:</h3>
+                        <div id="lista-marcas"></div>
+                    </div>
+                </section>
+            </div>
+
+            <section class="admin-card full-width">
+                <h2 id="titulo-formulario">Crear Nuevo Producto / Promoción</h2>
+                <form id="form-producto">
+                    <input type="text" id="producto-nombre" class="input-form" placeholder="Nombre (Ej. Whey Protein)" required>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <select id="producto-categoria" class="input-form" required>
+                            <option value="" disabled selected>Selecciona una categoría...</option>
+                        </select>
+                        <select id="producto-marca" class="input-form" required>
+                            <option value="" disabled selected>Selecciona una marca...</option>
+                        </select>
+                    </div>
+
+                    <textarea id="producto-detalle" class="input-form" rows="4" placeholder="Detalle del producto: ¿Para qué sirve? ¿Cómo se toma?" required></textarea>
+                    
+                    <select id="producto-promocion" class="input-form" required>
+                        <option value="no" selected>Producto Normal (Solo en Catálogo)</option>
+                        <option value="si">⭐ ¡ES UNA PROMOCIÓN! (Solo en sección Promos)</option>
+                    </select>
+
+                    <div style="display: flex; gap: 15px;">
+                        <input type="number" id="producto-precio" class="input-form" placeholder="Precio ($)" required>
+                        <input type="text" id="producto-sabor" class="input-form" placeholder="Sabor (Ej. Vainilla)" required>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px;">
+                        <input type="text" id="producto-lb" class="input-form" placeholder="Contenido (Ej. 5 Lbs)" required>
+                        <input type="number" id="producto-stock" class="input-form" placeholder="Stock disponible" required>
+                    </div>
+                    
+                    <input type="text" id="producto-imagen" class="input-form" placeholder="Pegar URLs separadas por coma (,)" required>
+                    
+                    <button type="submit" id="btn-submit-producto" class="btn-watermelon">Guardar en el Olimpo</button>
+                    <button type="button" id="btn-cancelar-edicion" class="btn-eliminar" style="display: none; width: 100%; margin-top: 10px;">Cancelar Edición</button>
+                </form>
+            </section>
+
+            <section class="admin-card full-width">
+                <h2>Inventario Divino (Edición y Visibilidad)</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Tipo / Categoría</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-inventario"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

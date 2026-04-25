@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones | KLAN FITNESS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tienda-body" id="pagina-promociones">
+
+    <header class="main-header">
+        <div class="logo">KLAN FITNESS</div>
+        <nav class="main-nav">
+            <a href="index.html">INICIO</a>
+            <a href="productos.html">PRODUCTOS</a>
+            <a href="promociones.html" class="active">PROMOCIONES</a>
+            <a href="nosotros.html">NOSOTROS</a>
+        </nav>
+        <div class="header-icons" style="display: flex; align-items: center;">
+    <div class="search-box">
+        <input type="text" id="input-buscador" placeholder="Buscar suplemento...">
+        <span class="icon-search" id="btn-buscador" title="Buscar">🔍</span>
+    </div>
+
+    <a href="carrito.html" class="icon-cart" style="text-decoration: none; color: white;">🛒 <span id="cart-count">0</span></a>
+    <a href="admin.html" style="text-decoration: none; color: white; font-size: 20px; margin-left: 15px;" title="Acceso Administrador">👤</a>
+</div>
+    </header>
+
+    <h2 class="titulo-centrado" style="margin-top: 30px;">⭐ NUESTRAS PROMOCIONES ⭐</h2>
+
+    <main class="tienda-container">
+        <aside class="filtros-section">
+            <h3>Categorías</h3>
+            <div id="contenedor-filtros-categorias" class="filtros-box" style="margin-bottom: 25px;"></div>
+            <h3>Marcas</h3>
+            <div id="contenedor-filtros-marcas" class="filtros-box"></div>
+        </aside>
+
+        <section class="productos-section">
+            <div id="grid-productos" class="productos-grid"></div>
+        </section>
+    </main>
+<footer class="main-footer">
+        <div class="footer-content">
+            <h2>KLAN FITNESS</h2>
+            <p>Potencia tu disciplina. Supera tus límites.</p>
+            <div class="footer-linea"></div>
+            <p class="copyright">© 2026 KLAN FITNESS. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+/* ==========================================================================
+   KLAN FITNESS - HOJA DE ESTILOS PRINCIPAL (DEPURADA Y OPTIMIZADA)
+========================================================================== */
+
+/* 1. VARIABLES GLOBALES: Paleta de colores principal de la marca */
+:root {
+    --watermelon-red: #ff3b3f; /* Rojo sandía para alertas, botones y títulos */
+    --watermelon-green: #2ecc71; /* Verde brillante para acentos y bordes */
+    --dark-bg: #121212; /* Fondo negro profundo de toda la web */
+    --dark-card: #1e1e1e; /* Gris muy oscuro para las tarjetas y cajas */
+    --text-light: #ffffff; /* Texto principal blanco */
+    --text-muted: #a0a0a0; /* Texto secundario gris (para descripciones) */
+}
+
+/* 2. ESTRUCTURA BASE: Aplica a toda la web */
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que la web ocupe al menos toda la pantalla */
+}
+
+main {
+    flex: 1; /* Empuja el footer siempre hacia el fondo de la pantalla */
+}
+
+/* ==========================================================================
+   COMPONENTES GLOBALES (MENÚ, FOOTER Y BUSCADOR)
+========================================================================== */
+
+/* MENU PRINCIPAL (HEADER): Se queda fijo arriba al hacer scroll */
+.main-header {
+    background-color: var(--dark-bg);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--watermelon-green);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Logo de Klan Fitness en el menú */
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--watermelon-red);
+    letter-spacing: 2px;
+}
+
+/* Enlaces de navegación (Inicio, Productos, etc.) */
+.main-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--watermelon-green); /* Se pintan de verde al pasar el mouse */
+}
+
+/* CAJA DE BÚSQUEDA DESPLEGABLE (La lupa) */
+.search-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 15px;
+}
+
+/* El cuadro donde escribes (oculto por defecto) */
+#input-buscador {
+    width: 0;
+    opacity: 0;
+    border: none;
+    background: var(--dark-card);
+    color: white;
+    padding: 5px 0;
+    border-radius: 20px;
+    transition: width 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+/* Clase que activa/muestra el buscador por JavaScript */
+#input-buscador.activo {
+    width: 200px;
+    opacity: 1;
+    padding: 8px 15px;
+    border: 1px solid var(--watermelon-green);
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+/* Icono de la lupa */
+#btn-buscador {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 8px;
+    color: white;
+    transition: 0.3s;
+}
+
+#btn-buscador:hover {
+    transform: scale(1.2);
+    color: var(--watermelon-green);
+}
+
+/* BURBUJA DE NOTIFICACIÓN DEL CARRITO (El circulito rojo con el número) */
+#cart-count {
+    display: none; /* Oculto si está en 0 */
+    background: var(--watermelon-red);
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 13px;
+    font-weight: 900;
+    vertical-align: top;
+    margin-left: 5px;
+    box-shadow: 0 0 10px rgba(255, 59, 63, 0.6);
+}
+
+/* PIE DE PÁGINA (FOOTER): Siempre al fondo */
+.main-footer {
+    background-color: var(--dark-card);
+    border-top: 4px solid var(--watermelon-green);
+    text-align: center;
+    padding: 50px 20px 30px 20px;
+    margin-top: 80px;
+    width: 100%;
+}
+
+.footer-content h2 {
+    color: var(--watermelon-red);
+    font-size: 2.2rem;
+    margin: 0 0 10px 0;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.footer-content p { color: var(--text-light); font-size: 1.1rem; }
+.footer-linea { height: 2px; background: #333; width: 50%; margin: 20px auto; }
+.footer-content .copyright { color: var(--text-muted); font-size: 0.9rem; }
+
+
+/* ==========================================================================
+   PÁGINA 1: INICIO (INDEX.HTML)
+========================================================================== */
+
+/* BANNER PRINCIPAL (Hero Section) con la imagen de fondo oscuro */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 5px solid var(--watermelon-red);
+}
+
+.hero-title { font-size: 3rem; color: white; font-weight: 900; margin-bottom: 15px;}
+.hero-subtitle { font-size: 1.2rem; color: var(--watermelon-green); margin-bottom: 30px; }
+
+/* Botón verde para contactar a WhatsApp */
+.btn-whatsapp {
+    background-color: #25D366; 
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    display: inline-block;
+    transition: 0.3s;
+}
+.btn-whatsapp:hover { background-color: #1ebd5a; transform: scale(1.05); }
+
+/* BARRA DE GARANTÍAS (Envíos, Originales, etc.) debajo del banner */
+.garantias-bar {
+    background-color: var(--watermelon-green);
+    color: #121212;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+/* SECCIÓN: NUTRICIÓN SIN LÍMITES (IMÁGENES INCLUSIVAS) */
+.inclusivo-section {
+    padding: 80px 20px;
+    background-color: var(--dark-bg);
+}
+
+.inclusivo-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+}
+
+.inclusivo-header h2 {
+    color: var(--watermelon-red);
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.inclusivo-header p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.inclusivo-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.inclusivo-card {
+    height: 400px; /* Tarjetas altas y elegantes */
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Empuja el texto hacia abajo */
+    padding: 30px;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.inclusivo-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--watermelon-green);
+    box-shadow: 0 15px 30px rgba(46, 204, 113, 0.2);
+}
+
+.inclusivo-info h3 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 4px solid var(--watermelon-red);
+    padding-left: 10px;
+    transition: 0.3s;
+}
+
+.inclusivo-card:hover .inclusivo-info h3 {
+    border-left-color: var(--watermelon-green);
+    color: var(--watermelon-red);
+}
+
+.inclusivo-info p {
+    color: var(--text-light);
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Caja de promesa inferior */
+.promesa-asesoria {
+    max-width: 1000px;
+    margin: 50px auto 0 auto;
+    background-color: var(--dark-card);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border-top: 3px solid var(--watermelon-green);
+}
+
+.promesa-asesoria h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 0;
+    letter-spacing: 1px;
+}
+
+.promesa-asesoria p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .inclusivo-header h2 { font-size: 2rem; }
+    .inclusivo-card { height: 300px; }
+}
+
+/* SECCIÓN: CATEGORÍAS ESTRELLA (Look Negro Profundo Automatizado) */
+.categorias-estrella { padding: 80px 20px; background-color: var(--dark-bg); }
+.categorias-grid { max-width: 1200px; margin: 30px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.categoria-box {
+    height: 120px;
+    background-color: #050505; /* Negro profundo para el botón */
+    border: 1px solid #222;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.categoria-box h3 { color: white; font-size: 1.4rem; font-weight: 900; letter-spacing: 4px; transition: 0.3s; }
+.categoria-box:hover { transform: translateY(-8px); border-color: var(--watermelon-green); background-color: #000; }
+.categoria-box:hover h3 { color: var(--watermelon-red); letter-spacing: 6px; }
+
+/* SECCIÓN: MURO DE MARCAS ALIADAS */
+.marcas-aliadas { background-color: #111; padding: 40px 20px; text-align: center; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+.marcas-aliadas p { color: var(--watermelon-green); font-weight: bold; letter-spacing: 2px; }
+.marcas-lista { color: var(--text-muted); font-size: 1.2rem; font-weight: 300; }
+.marcas-lista span { margin: 0 15px; font-weight: bold; }
+
+/* SECCIÓN: TESTIMONIOS (Resultados del Klan) */
+.testimonios { padding: 60px 20px; }
+.testimonios-container { max-width: 1200px; margin: 30px auto; display: flex; flex-wrap: wrap; gap: 20px; }
+.testimonio-card { flex: 1 1 300px; background-color: var(--dark-card); padding: 30px; border-radius: 12px; border-left: 4px solid var(--watermelon-red); }
+.testimonio-card .autor { color: var(--watermelon-green); font-weight: bold; text-transform: uppercase; }
+
+/* CARRUSEL DE PROMOCIONES */
+.titulo-centrado { text-align: center; color: var(--watermelon-red); font-size: 2.5rem; margin-top: 50px; }
+.carrusel-contenedor { max-width: 1200px; margin: 30px auto; overflow-x: auto; padding-bottom: 20px;}
+.carrusel-track { display: flex; gap: 20px; }
+.carrusel-item { min-width: 250px; background: var(--dark-card); border: 2px solid var(--watermelon-green); border-radius: 10px; cursor: pointer; overflow: hidden; transition: 0.3s; }
+.carrusel-item:hover { transform: translateY(-5px); box-shadow: 0 0 15px var(--watermelon-red); border-color: var(--watermelon-red); }
+.carrusel-item img { width: 100%; height: 200px; object-fit: cover; background: white;}
+.carrusel-info { padding: 15px; text-align: center; }
+.carrusel-info h4 { color: white; margin: 0 0 10px 0; }
+.badge-promo { background: var(--watermelon-red); color: white; padding: 5px 10px; font-weight: bold; border-radius: 5px; }
+
+
+/* ==========================================================================
+   PÁGINA 2: TIENDA DE PRODUCTOS Y FILTROS
+========================================================================== */
+
+/* Contenedor que divide los filtros a la izquierda y la cuadricula a la derecha */
+.tienda-container { display: flex; max-width: 1300px; margin: 40px auto; padding: 0 20px; gap: 30px; }
+
+/* Panel de Filtros (Categorías y Marcas) */
+.filtros-section { width: 250px; background-color: var(--dark-card); padding: 20px; border-radius: 10px; height: fit-content; border-left: 4px solid var(--watermelon-green); }
+.btn-filtro { background: transparent; color: var(--text-muted); border: 1px solid #444; padding: 10px; text-align: left; border-radius: 5px; cursor: pointer; transition: 0.3s; font-weight: bold; width: 100%; margin-bottom: 5px; }
+.btn-filtro:hover, .btn-filtro.active { background: var(--watermelon-red); color: white; border-color: var(--watermelon-red); }
+
+/* Cuadrícula de Tarjetas de Productos */
+.productos-section { flex: 1; }
+.productos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+
+/* Tarjeta individual de un producto */
+.producto-card { background-color: var(--dark-card); border-radius: 10px; overflow: hidden; transition: 0.3s; border: 1px solid #222; }
+.producto-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2); border-color: var(--watermelon-green); }
+.producto-img { width: 100%; height: 250px; object-fit: cover; cursor: pointer; background-color: #fff; }
+.producto-info { padding: 20px; }
+.producto-cat { color: var(--watermelon-green); font-size: 12px; font-weight: bold; }
+.producto-info h3 { font-size: 18px; color: white; cursor: pointer; }
+.producto-info h3:hover { color: var(--watermelon-red); }
+.producto-precio { font-size: 22px; font-weight: bold; color: var(--watermelon-green); }
+
+/* Botón rojo estándar para añadir al carrito desde la tienda */
+.btn-watermelon {
+    width: 100%; padding: 12px; background-color: var(--watermelon-red); color: white;
+    border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s;
+}
+.btn-watermelon:hover { background-color: #d12e31; }
+
+
+/* ==========================================================================
+   PÁGINA 3: DETALLE DEL PRODUCTO (Re-Diseño Divino)
+========================================================================== */
+
+/* Contenedor principal de la vista de un solo producto */
+.detalle-container { display: flex; flex-wrap: wrap; gap: 50px; max-width: 1400px; margin: 50px auto; padding: 0 20px; align-items: flex-start; }
+
+/* Lado izquierdo: Foto gigante (Ocupa el 65% del ancho) */
+.detalle-galeria { flex: 2 1 650px; display: flex; flex-direction: column; gap: 20px; }
+.img-main { width: 100%; height: 750px; object-fit: contain; background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+
+/* Miniaturas de la galería y Trucos de Alta Definición (Anti-pixelado) */
+.miniaturas-box { display: flex; gap: 15px; justify-content: center; overflow-x: auto; }
+.img-miniatura {
+    width: 110px; height: 110px; object-fit: contain; background-color: #fff; border: 3px solid transparent;
+    border-radius: 8px; cursor: pointer; transition: 0.3s ease-in-out; opacity: 0.7;
+    /* Optimizadores de GPU para que no se pixelen */
+    image-rendering: high-quality; 
+    transform: translateZ(0); 
+    backface-visibility: hidden;
+}
+.img-miniatura:hover { border-color: var(--watermelon-red); opacity: 1; transform: scale(1.1) translateZ(0); }
+
+/* Lado derecho: Info, precio y compra (Ocupa el 35% del ancho) */
+.detalle-info { flex: 1 1 400px; background-color: var(--dark-card); padding: 35px; border-radius: 12px; border-left: 5px solid var(--watermelon-red); position: sticky; top: 100px; }
+.detalle-info h1 { font-size: 2.8rem; text-transform: uppercase; line-height: 1.1; }
+.precio-destacado { font-size: 3.2rem; color: var(--watermelon-red); font-weight: 900; margin-bottom: 20px; }
+#detalle-descripcion { color: var(--text-muted); line-height: 1.7; font-size: 1.05rem; white-space: pre-line; }
+
+/* Cuadro compacto con detalles técnicos (Sabor, Stock, Libras) */
+.opciones-compra { display: flex; flex-direction: column; gap: 12px; background: #111; padding: 20px; border-radius: 8px; }
+.opcion { display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 8px; }
+.opcion strong { color: var(--watermelon-green); text-transform: uppercase; font-size: 0.85rem; }
+
+/* Controles de Cantidad y Botón Elegante de Añadir al carrito */
+.accion-compra { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+.cantidad-box { display: flex; align-items: center; justify-content: center; background: #111; border: 2px solid #333; height: 50px; border-radius: 8px; }
+.cantidad-box button { background: transparent; color: white; border: none; padding: 0 15px; font-size: 1.5rem; font-weight: bold; cursor: pointer; }
+.cantidad-box input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-size: 1.2rem; font-weight: bold; }
+.btn-elegante { height: 55px; font-size: 1.2rem; border-radius: 8px; }
+
+
+/* ==========================================================================
+   PÁGINA 4: CARRITO DE COMPRAS (ALINEACIÓN PERFECTA CON GRID)
+========================================================================== */
+
+.carrito-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.titulo-carrito { font-size: 2.5rem; border-left: 5px solid var(--watermelon-green); padding-left: 15px; text-transform: uppercase; }
+.carrito-layout { display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start; }
+
+/* Lista de productos elegidos */
+.carrito-lista { flex: 2 1 600px; display: flex; flex-direction: column; gap: 15px; }
+
+/* LA SOLUCIÓN DEFINITIVA: Cuadrícula estricta de 5 columnas */
+.carrito-item { 
+    display: grid; 
+    grid-template-columns: 80px 1fr auto 120px 40px; /* Foto, Info, Botones, Total, Basurero */
+    align-items: center; 
+    background-color: var(--dark-card); 
+    padding: 20px; 
+    border-radius: 10px; 
+    border: 1px solid #333; 
+    gap: 20px; 
+}
+
+.carrito-item img { width: 80px; height: 80px; object-fit: contain; background: white; border-radius: 8px; padding: 5px; }
+
+.carrito-item-info { display: flex; flex-direction: column; justify-content: center; }
+.carrito-item-info h3 { margin: 0 0 5px 0; font-size: 1.1rem; color: white; }
+.carrito-item-subtotal { font-size: 1.2rem; text-align: right; color: white; font-weight: bold; }
+
+/* Papelera de eliminar producto */
+.btn-eliminar-item { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; opacity: 0.6; transition: 0.3s; justify-self: center; }
+.btn-eliminar-item:hover { opacity: 1; transform: scale(1.1); color: var(--watermelon-red); }
+
+/* Factura final y formulario del cliente (Lado Derecho) */
+.carrito-resumen { flex: 1 1 350px; background-color: var(--dark-card); padding: 30px; border-radius: 12px; border-top: 5px solid var(--watermelon-red); position: sticky; top: 100px; }
+.resumen-detalle { display: flex; justify-content: space-between; color: var(--text-muted); margin-bottom: 15px; }
+.resumen-total { display: flex; justify-content: space-between; border-top: 2px solid #333; padding-top: 20px; font-size: 1.3rem; font-weight: 900; }
+#resumen-total-final { color: var(--watermelon-red); }
+
+/* Ajuste Responsivo Exclusivo para el Carrito en Celulares */
+@media (max-width: 768px) {
+    .carrito-item { 
+        grid-template-columns: 1fr; /* En celular, todo pasa a 1 sola columna vertical */
+        text-align: center; 
+        gap: 15px;
+        padding: 20px;
+    }
+    .carrito-item img { margin: 0 auto; width: 100px; height: 100px; }
+    .carrito-item-subtotal { text-align: center; justify-self: center; }
+    .carrito-item .carrito-item-cantidad { margin: 0 auto; justify-content: center; width: fit-content; }
+}
+
+
+/* ==========================================================================
+   PÁGINA 5: NOSOTROS (FILOSOFÍA KLAN FITNESS)
+========================================================================== */
+
+/* Banner de la sección Nosotros */
+.nosotros-hero {
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover; background-position: center; background-attachment: fixed;
+    padding: 100px 20px; text-align: center; border-bottom: 4px solid var(--watermelon-green);
+}
+.nosotros-hero h1 { color: var(--watermelon-red); font-size: 3rem; letter-spacing: 2px; }
+
+/* Cajas de texto (Atención al cliente y Alianza Bodytech) */
+.nosotros-content { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+.nosotros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; margin-bottom: 60px; }
+.nosotros-caja { background-color: var(--dark-card); padding: 40px; border-radius: 12px; border-left: 5px solid var(--watermelon-red); }
+.nosotros-caja h2 { font-size: 1.8rem; margin-bottom: 25px; }
+.nosotros-caja p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; }
+.nosotros-caja strong { color: var(--watermelon-green); }
+
+/* Pequeña caja inferior con 3 valores rápidos */
+.nosotros-valores { display: flex; flex-wrap: wrap; gap: 20px; background-color: #0d0d0d; padding: 40px; border-radius: 12px; border: 1px solid #222; }
+.valor-item h3 { color: var(--watermelon-red); margin-bottom: 10px; }
+
+
+/* ==========================================================================
+   PÁGINA 6: PANEL DE ADMINISTRADOR (LOGIN Y DASHBOARD)
+========================================================================== */
+
+/* PANTALLA NEGRA DE LOGIN */
+.login-pantalla { height: 100vh; display: flex; justify-content: center; align-items: center; background-color: var(--dark-bg); }
+.login-caja { background-color: var(--dark-card); padding: 40px; border-radius: 12px; border-top: 5px solid var(--watermelon-green); width: 100%; max-width: 400px; text-align: center; }
+
+/* Input genérico para formularios (Login y Admin) */
+.input-form { width: 100%; padding: 12px; margin-bottom: 15px; background-color: #2a2a2a; border: 1px solid #444; color: white; border-radius: 5px; }
+.input-form:focus { outline: none; border-color: var(--watermelon-green); }
+
+/* DASHBOARD: Estructura interna del panel del administrador */
+.admin-header { background-color: var(--dark-card); padding: 20px; text-align: center; border-bottom: 3px solid var(--watermelon-green); }
+.admin-header h1 { color: var(--watermelon-red); margin: 0; }
+.admin-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 30px; max-width: 1200px; margin: 0 auto; }
+
+/* Cajas de gestión (Crear producto, Crear categoría) */
+.admin-card { background-color: var(--dark-card); padding: 25px; border-radius: 10px; flex: 1 1 300px; border-top: 4px solid var(--watermelon-red); }
+.admin-card.full-width { flex: 1 1 100%; border-top: 4px solid var(--watermelon-green); }
+.admin-card h2 { margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+
+/* Lista de categorías para borrar en admin */
+.lista-categorias-box { margin-top: 20px; background: #111; padding: 15px; border-radius: 5px; }
+.categoria-item { display: flex; justify-content: space-between; background: #222; padding: 10px; margin-bottom: 8px; border-left: 3px solid var(--watermelon-green); }
+.btn-eliminar { background: transparent; color: var(--watermelon-red); border: 1px solid var(--watermelon-red); padding: 5px 10px; cursor: pointer; }
+.btn-eliminar:hover { background: var(--watermelon-red); color: white; }
+
+/* Tabla donde se listan los productos inventariados */
+.table-responsive { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; text-align: left; }
+.admin-table th, .admin-table td { padding: 12px; border-bottom: 1px solid #333; }
+.img-tabla { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+
+/* Botones para mostrar/ocultar productos del catálogo */
+.btn-ocultar { background: #333; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+.btn-mostrar { background: var(--watermelon-green); color: #121212; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.badge-on { color: var(--watermelon-green); font-weight: bold; }
+.badge-off { color: var(--watermelon-red); font-weight: bold; }
+
+/* ==========================================================================
+   AJUSTES PARA TELÉFONOS MÓVILES (RESPONSIVE)
+========================================================================== */
+@media (max-width: 768px) {
+    .servicios-section { padding: 40px 15px; }
+    .nosotros-hero h1 { font-size: 2.2rem; }
+    .nosotros-caja { padding: 30px 20px; }
+    .garantias-bar { flex-direction: column; text-align: center; gap: 10px; }
+}
