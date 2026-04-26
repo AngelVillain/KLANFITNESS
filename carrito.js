@@ -1,128 +1,157 @@
-// 1. UTILIDAD DE MONEDA
+// Formateador de Pesos Colombianos
 const formatearCOP = (precio) => {
     return new Intl.NumberFormat('es-CO', {
         style: 'currency', currency: 'COP', minimumFractionDigits: 0
-    }).format(precio || 0);
+    }).format(precio);
 };
 
-// 2. DIBUJAR EL CARRITO (EN TIEMPO REAL)
-function renderizarCarrito() {
-    // ¡EL SECRETO! Leemos la memoria exactamente en el momento de dibujar
-    let carritoKlan = JSON.parse(localStorage.getItem('carritoKlan')) || [];
-    
-    const contenedorItems = document.getElementById('contenedor-items-carrito');
-    if (!contenedorItems) return;
+// Leer la memoria del carrito
+let carritoKlan = JSON.parse(localStorage.getItem('carritoKlan')) || [];
 
-    contenedorItems.innerHTML = '';
-    let precioTotal = 0;
-    let cantidadTotal = 0;
+// 1. DIBUJAR LOS PRODUCTOS EN LA PANTALLA
+const dibujarCarrito = () => {
+    const contenedor = document.getElementById('contenedor-items-carrito');
+    const spanCantidad = document.getElementById('resumen-cantidad');
+    const spanSubtotal = document.getElementById('resumen-subtotal');
+    const spanTotalFinal = document.getElementById('resumen-total-final');
+
+    contenedor.innerHTML = '';
+    let total = 0;
+    let cantidadItems = 0;
 
     if (carritoKlan.length === 0) {
-        contenedorItems.innerHTML = `
-            <div style="text-align:center; padding: 50px; background: var(--dark-card); border-radius: 10px; width: 100%;">
-                <h3 style="color: var(--text-muted); margin-bottom: 20px;">Tu carrito está vacío.</h3>
-                <a href="productos.html" class="btn-watermelon" style="text-decoration:none; padding: 10px 20px; display:inline-block; border-radius:5px;">Ir a la Tienda</a>
-            </div>`;
-    } else {
-        carritoKlan.forEach((item, index) => {
-            const subtotalItem = (item.precio || 0) * (item.cantidad || 1);
-            precioTotal += subtotalItem;
-            cantidadTotal += (item.cantidad || 1);
-
-            contenedorItems.innerHTML += `
-                <div class="carrito-item">
-                    <img src="${item.imagen || 'https://via.placeholder.com/100x100/111/4ade80?text=KLAN'}" alt="${item.nombre}">
-                    <div class="carrito-item-info">
-                        <h3>${item.nombre}</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Sabor: ${item.sabor || 'N/A'} | Lbs: ${item.libras || 'N/A'}</p>
-                        <p class="precio-item">${formatearCOP(item.precio)} c/u</p>
-                    </div>
-                    
-                    <div class="carrito-item-cantidad" style="display:flex; align-items:center; gap:10px; background:#111; padding:5px 10px; border-radius:8px;">
-                        <button onclick="cambiarCantidad(${index}, -1)" style="background:transparent; color:white; border:none; font-size:1.5rem; cursor:pointer;">-</button>
-                        <span style="font-size: 1.2rem; font-weight: bold; width: 25px; text-align: center;">${item.cantidad || 1}</span>
-                        <button onclick="cambiarCantidad(${index}, 1)" style="background:transparent; color:white; border:none; font-size:1.2rem; cursor:pointer;">+</button>
-                    </div>
-
-                    <div class="carrito-item-subtotal">
-                        <strong>${formatearCOP(subtotalItem)}</strong>
-                    </div>
-                    <button class="btn-eliminar-item" onclick="eliminarDelCarrito(${index})">🗑️</button>
-                </div>`;
-        });
+        contenedor.innerHTML = '<p style="color: var(--text-muted); font-size: 1.2rem;">Tu carrito está vacío. ¡Ve a la tienda y equípate!</p>';
+        spanCantidad.innerText = '0';
+        spanSubtotal.innerText = '$ 0';
+        spanTotalFinal.innerText = '$ 0';
+        return;
     }
 
-    // Actualizar Panel Derecho
-    if(document.getElementById('resumen-cantidad')) document.getElementById('resumen-cantidad').innerText = cantidadTotal;
-    if(document.getElementById('resumen-subtotal')) document.getElementById('resumen-subtotal').innerText = formatearCOP(precioTotal);
-    if(document.getElementById('resumen-total-final')) document.getElementById('resumen-total-final').innerText = formatearCOP(precioTotal);
-    
-    // Actualizar Burbuja del Menú para que sea idéntica a lo dibujado
-    const bCarrito = document.getElementById('cart-count');
-    if(bCarrito) {
-        bCarrito.innerText = cantidadTotal;
-        bCarrito.style.display = cantidadTotal > 0 ? 'inline-block' : 'none';
-    }
-}
+    carritoKlan.forEach((item, index) => {
+        let subtotalItem = item.precio * item.cantidad;
+        total += subtotalItem;
+        cantidadItems += item.cantidad;
 
-// 3. FUNCIONES DE MODIFICACIÓN EN TIEMPO REAL
-window.cambiarCantidad = (index, cambio) => {
-    let carritoKlan = JSON.parse(localStorage.getItem('carritoKlan')) || [];
-    if(carritoKlan[index]) {
-        carritoKlan[index].cantidad += cambio;
-        if (carritoKlan[index].cantidad <= 0) carritoKlan.splice(index, 1);
-        localStorage.setItem('carritoKlan', JSON.stringify(carritoKlan));
-    }
-    renderizarCarrito();
+        contenedor.innerHTML += `
+            <div class="carrito-item">
+                <img src="${item.imagen}" alt="${item.nombre}">
+                <div class="carrito-item-info">
+                    <h3>${item.nombre}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">
+                        ${item.sabor ? `Sabor: ${item.sabor} | ` : ''} ${item.libras ? `${item.libras} Lbs` : ''}
+                    </p>
+                    <p class="precio-item">${formatearCOP(item.precio)}</p>
+                    <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+                        <button onclick="cambiarCantidad(${index}, -1)" style="background: #333; color: white; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer;">-</button>
+                        <span style="font-weight: bold; font-size: 1.1rem;">${item.cantidad}</span>
+                        <button onclick="cambiarCantidad(${index}, 1)" style="background: var(--watermelon-green); color: #121212; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; font-weight: bold;">+</button>
+                    </div>
+                </div>
+                <div class="carrito-item-subtotal">
+                    ${formatearCOP(subtotalItem)}
+                </div>
+                <button class="btn-eliminar-item" title="Eliminar" onclick="eliminarDelCarrito(${index})">🗑️</button>
+            </div>
+        `;
+    });
+
+    spanCantidad.innerText = cantidadItems;
+    spanSubtotal.innerText = formatearCOP(total);
+    spanTotalFinal.innerText = formatearCOP(total);
 };
 
+// 2. ELIMINAR PRODUCTO
 window.eliminarDelCarrito = (index) => {
-    let carritoKlan = JSON.parse(localStorage.getItem('carritoKlan')) || [];
     carritoKlan.splice(index, 1);
     localStorage.setItem('carritoKlan', JSON.stringify(carritoKlan));
-    renderizarCarrito();
+    dibujarCarrito();
+    // Actualizar la bolita roja si la función existe en main.js
+    if(typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
 };
 
-// 4. BOTÓN WHATSAPP
-const btnWA = document.getElementById('btn-enviar-pedido');
-if(btnWA) {
-    btnWA.onclick = () => {
-        let carritoKlan = JSON.parse(localStorage.getItem('carritoKlan')) || [];
-        if(carritoKlan.length === 0) { alert("Tu carrito está vacío."); return; }
-        
-        const nom = document.getElementById('cliente-nombre').value;
-        const tel = document.getElementById('cliente-telefono').value;
-        const ciu = document.getElementById('cliente-ciudad').value;
-        const dir = document.getElementById('cliente-direccion').value;
+// 3. SUMAR O RESTAR CANTIDAD
+window.cambiarCantidad = (index, cambio) => {
+    let nuevaCantidad = carritoKlan[index].cantidad + cambio;
+    if (nuevaCantidad > 0) {
+        // Asumiendo que controlamos el stock, pero por ahora permitimos sumar/restar libremente
+        carritoKlan[index].cantidad = nuevaCantidad;
+        localStorage.setItem('carritoKlan', JSON.stringify(carritoKlan));
+        dibujarCarrito();
+        if(typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
+    }
+};
 
-        if(!nom || !tel || !ciu || !dir) { alert("Completa tus datos de envío para poder despachar tu pedido."); return; }
+// 4. LÓGICA DEL BOTÓN WHATSAPP (AQUÍ ESTABA EL FALLO)
+document.getElementById('btn-enviar-pedido')?.addEventListener('click', () => {
+    if (carritoKlan.length === 0) {
+        alert("Tu carrito está vacío. Agrega productos antes de hacer el pedido.");
+        return;
+    }
 
-        let msg = `🔥 *PEDIDO KLAN FITNESS* 🔥%0A👤 *Cliente:* ${nom}%0A📱 *Tel:* ${tel}%0A📍 *Ciudad:* ${ciu}%0A🏠 *Dir:* ${dir}%0A------------------%0A`;
-        let total = 0;
-        carritoKlan.forEach(i => {
-            let sub = i.precio * i.cantidad;
-            total += sub;
-            msg += `▪️ ${i.cantidad}x ${i.nombre} (${i.sabor || 'N/A'}) - ${formatearCOP(sub)}%0A`;
-        });
-        msg += `------------------%0A💰 *TOTAL:* ${formatearCOP(total)}%0A%0AConfirmo mi pedido. ¿A dónde debo enviar el dinero? 💪`;
-        
-        window.open(`https://wa.me/573194937066?text=${msg}`, '_blank');
-    };
-}
+    // Capturar datos del cliente
+    const nombre = document.getElementById('cliente-nombre').value.trim();
+    const telefono = document.getElementById('cliente-telefono').value.trim();
+    const ciudad = document.getElementById('cliente-ciudad').value.trim();
+    const direccion = document.getElementById('cliente-direccion').value.trim();
 
-// 5. BUSCADOR EN EL CARRITO
-const btnBuscador = document.getElementById('btn-buscador');
-const inputBuscador = document.getElementById('input-buscador');
-if (btnBuscador && inputBuscador) {
-    btnBuscador.addEventListener('click', () => {
-        inputBuscador.classList.toggle('activo');
-        if (inputBuscador.classList.contains('activo')) inputBuscador.focus();
-        else if (inputBuscador.value.trim() !== "") window.location.href = `productos.html?q=${inputBuscador.value.trim()}`;
+    if (!nombre || !telefono || !ciudad || !direccion) {
+        alert("Por favor, completa todos los datos de envío (Nombre, Teléfono, Ciudad y Dirección).");
+        return;
+    }
+
+    // Armar el mensaje base
+    let mensaje = `*NUEVO PEDIDO - KLAN FITNESS* 🏋️‍♂️🍉\n\n`;
+    mensaje += `*📦 DATOS DEL CLIENTE:*\n`;
+    mensaje += `- Nombre: ${nombre}\n`;
+    mensaje += `- Teléfono: ${telefono}\n`;
+    mensaje += `- Ciudad: ${ciudad}\n`;
+    mensaje += `- Dirección: ${direccion}\n\n`;
+    
+    mensaje += `*🛒 DETALLE DEL PEDIDO:*\n`;
+    let total = 0;
+    
+    // Bucle para añadir cada producto de la memoria al mensaje
+    carritoKlan.forEach(item => {
+        let subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        mensaje += `🔸 ${item.cantidad}x ${item.nombre}\n`;
+        if (item.sabor) mensaje += `   Sabor: ${item.sabor}\n`;
+        if (item.libras) mensaje += `   Tamaño: ${item.libras} Lbs\n`;
+        mensaje += `   Subtotal: ${formatearCOP(subtotal)}\n\n`;
     });
-    inputBuscador.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && inputBuscador.value.trim() !== "") window.location.href = `productos.html?q=${inputBuscador.value.trim()}`;
-    });
-}
 
-// Arrancar al cargar la página
-renderizarCarrito();
+    mensaje += `*💰 TOTAL A PAGAR: ${formatearCOP(total)}*\n\n`;
+    mensaje += `¡Quedo atento para coordinar el pago y envío!`;
+
+    // Enviar al número establecido
+    const numeroWhatsApp = "573194937066";
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
+});
+
+// 5. CEREBRO DE LA LUPA (Buscador)
+document.getElementById('btn-buscador')?.addEventListener('click', () => {
+    const input = document.getElementById('input-buscador');
+    input.classList.toggle('activo');
+    if(input.classList.contains('activo')) {
+        input.focus();
+    } else {
+        const query = input.value.trim();
+        if(query) {
+            window.location.href = `productos.html?buscar=${encodeURIComponent(query)}`;
+        }
+    }
+});
+
+document.getElementById('input-buscador')?.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') {
+        const query = e.target.value.trim();
+        if(query) {
+            window.location.href = `productos.html?buscar=${encodeURIComponent(query)}`;
+        }
+    }
+});
+
+// Iniciar la página dibujando el carrito
+dibujarCarrito();
